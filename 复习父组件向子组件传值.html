@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+
+<body>
+
+    <!-- 父组件给子组件传值，1 通过属性绑定将值传给子组件，2子组件在props中声明接收值的入参 -->
+    <div id="app">
+        <son :assert="assert" @func='accept'></son>
+    </div>
+
+    <template id='sonTemp'>
+        <div>
+            查理二世，获得:{{assert}}
+            <input type="button" value="孝敬老人" id="" @click='send'>
+        </div>
+    </template>
+
+    <script>
+        var son = {
+            template: '#sonTemp',
+            props: ['assert'],
+            methods:{
+                send(){
+                    this.$emit('func',"获得二世：100000000000000000$")
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                assert: "查理一世的财富--1,000,000,000$",
+                acceptMoney:''
+            },
+            components: {
+                son
+            },
+            methods:{
+                accept(data){
+                    console.log('收到子组件的调用：'+data);
+                    
+                    this.acceptMoney = data
+                    
+                    
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

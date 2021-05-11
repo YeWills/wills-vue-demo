@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+    <div id='app'>
+        <app>{{title}}</app>
+        <div>
+            <div ref='com1'><com1></com1></div>
+            <div ref='com2'><com2></com2></div>
+            <div ref='com3'><com3></com3></div>
+        </div>
+    </div>
+
+    <script>
+        var vm = new Vue({
+
+            el:'#app',
+            data:{
+                title:'预处理'
+            },
+            methods:{
+                changeSequence(upOrDown,componentName){
+                    if (upOrDown == 1) {
+
+                        
+                        var preComponent = this.$refs[componentName].previousElementSibling
+                        console.log(preComponent)
+                        if (!preComponent) {
+                            return;
+                        }
+                        
+                        this.$refs[componentName].after(preComponent)
+
+                    }
+                    if (upOrDown == -1) {
+                        var nextComponent = this.$refs[componentName].nextElementSibling
+                        console.log(nextComponent)
+                        if (!nextComponent) {
+                            return;
+                        }
+                        
+                        this.$refs[componentName].before(nextComponent)
+                    }
+                    
+                }
+            },
+            components:{
+                
+                com1:{
+                    name:'com1',
+                    data(){
+                        return {
+                            'title':'子组件1'
+                        }
+                    },
+
+                    template:'<div><h1> {{title}}</h1> <a href="#" @click=moveUp>上</a> <span></span> <a href="#" @click=moveDown>下</a></div> ',
+                    methods:{
+                        moveUp(){
+                            this.$parent.changeSequence(1, this.$options.name)
+                        },
+                        moveDown(){
+                            this.$parent.changeSequence(-1,this.$options.name)
+                        },
+                    }
+                },
+
+                com2:{
+                    name:'com2',
+                    data(){
+                        return {
+                            'title':'子组件2'
+                        }
+                    },
+
+                    template:'<div><h1> {{title}}</h1> <a href="#" @click=moveUp>上</a> <span></span> <a href="#" @click=moveDown>下</a></div> ',
+                    methods:{
+                        moveUp(){
+                            this.$parent.changeSequence(1, this.$options.name)
+                        },
+                        moveDown(){
+                            this.$parent.changeSequence(-1,this.$options.name)
+                        },
+                    }
+                },
+                com3:{
+                    name:'com3',
+                    data(){
+                        return {
+                            'title':'子组件3'
+                        }
+                    },
+
+                    template:'<div><h1> {{title}}</h1> <a href="#" @click=moveUp>上</a> <span></span> <a href="#" @click=moveDown>下</a></div> ',
+                    methods:{
+                        moveUp(){
+                            this.$parent.changeSequence(1, this.$options.name)
+                        },
+                        moveDown(){
+                            this.$parent.changeSequence(-1,this.$options.name)
+                        },
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

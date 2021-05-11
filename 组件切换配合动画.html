@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <style>
+        
+        .component-fade-enter-active,
+        .component-fade-leave-active {
+            transition: opacity .3s ease;
+        }
+
+        .component-fade-enter,
+        .component-fade-leave-to
+
+        /* .component-fade-leave-active for below version 2.1.8 */
+            {
+            opacity: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id='app'>
+        <!-- login 不加字符串不会被vue解析成变量 -->
+        <input type="button" value="没有账号" @click="componetId='login'">
+        <input type="button" value="已有账号" @click="componetId='regist'">
+        <transition name="component-fade" mode="out-in">
+            <component :is='componetId'></component>
+        </transition>
+
+    </div>
+
+    <template id="login">
+        <div>
+            登陆
+        </div>
+    </template>
+
+    <template id="regist">
+        <div>
+            注册
+        </div>
+    </template>
+
+    <script>
+
+        Vue.component('login', {
+            template: '#login'
+        })
+
+        Vue.component('regist', {
+            template: '#regist'
+        })
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: false,
+                componetId: 'regist'
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

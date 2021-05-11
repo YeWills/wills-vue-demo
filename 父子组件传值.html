@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+</head>
+<body>
+
+    <div id='app'>
+        <com1 :msg='msg'></com1>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+
+            el:'#app',
+            data:{
+                msg:'123 父组件'
+            },
+            components:{
+                
+                com1:{
+                    data(){
+                        return {
+                            'tltle':'子组件标题'
+                        }
+                    },
+                    // 父子组件传值通过props； 但是props属性为只读，此处不能更新
+                    props:[
+                        'msg'
+                    ],
+                    template:'<h1>h1标签 {{msg}}</h1>'
+                }
+            }
+
+        })
+    
+    </script>
+    
+</body>
+</html>

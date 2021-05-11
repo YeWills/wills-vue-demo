@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件化创建应用</title>
+</head>
+<body>
+<div id="app">
+    <ol>
+        <todo-item :initlistvalue="scorevalue" ref="my1" ></todo-item>
+    </ol>
+    <button  @click="setClick">模拟请求返回后设置编辑表单值</button>
+    <button  @click="btnclick">click</button>
+</div>
+</body>
+<script src="../lib/vue.js"></script>
+<script src="./test.js"></script>
+<script>
+    var cc = 1;
+    Vue.component('todo-item', scoring);
+    var app = new Vue({
+        el: '#app',
+        data: {
+            scorevalue:{},
+        },
+        methods:{
+            btnclick:function(val){
+                var _this = this;
+                console.log('this.values', JSON.stringify(this.$refs.my1.listvalues))
+            },
+            setClick:function(){//父组件改变子组件listvalues state的方式
+                // Vue.set(this.$refs.my1.listvalues, "mendian", 1)//方式一：不怎么推荐 ： 用到ref，子组件可读性差，拓展性差；
+                // this.$refs.listvalues.setvalue({"mendian":1,"xingxiang":22,"quyu":111})//方式二 ： 不怎么推荐： 用到ref，子组件可读性差，拓展性差;
+                this.scorevalue = {"mendian":1,"xingxiang":22,"quyu":111}//方式三 ： 强烈推荐 ： 通过子组件watch父组件props，让props重新赋值state；
+            }
+        }
+    })
+</script>
+</html>

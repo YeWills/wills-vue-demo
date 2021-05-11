@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.min.css">
+
+    <style>
+
+        html,body{
+            margin:0;
+            padding:0
+        }
+        h1{
+            font-size: 18px;
+            margin:0;
+            padding:0
+        }
+        
+        .header {
+            background-color: rgb(95, 158, 116);
+            height: 80px;
+
+        }
+
+        .container {
+            display: flex;
+            height: 600px;
+            padding: 0;
+            margin:0
+        }
+        .left{
+            flex: 2;
+            background-color:rgb(224, 160, 214);
+        }
+        .main{
+            flex:8;
+            background-color:rgb(224, 233, 141);
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id='app'>
+        <router-view class="header"></router-view>
+        <div class="container">
+            <router-view name='left' class="left"></router-view>
+            <router-view name='main' class="main"></router-view>
+        </div>
+    </div>
+
+    <script>
+        var header = {
+            template: '<h1>头部</h1>'
+        }
+        var leftBox = {
+            template: '<h1>侧边栏</h1>'
+        }
+        var mainBox = {
+            template: '<h1>头部区域</h1>'
+        }
+        var router = new VueRouter({
+            routes: [
+                {
+                    path: '/', components: {
+
+                        left: leftBox,
+                        main: mainBox,
+                        default: header,
+                    }
+                }
+            ]
+        })
+
+        var vm = new Vue({
+            el: '#app',
+            data: {},
+            router
+        })
+    </script>
+</body>
+
+</html>

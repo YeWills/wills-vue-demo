@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div id="app">
+        <comment-box v-on:func='loadPosts'></comment-box>
+
+        <ul class="list-group">
+            <li class="list-group-item" v-for='item in posts' :key='item.id'>
+                <span class="badge">post： {{item.user}}</span>
+                {{item.content}}
+            </li>
+        </ul>
+
+    </div>
+
+    <template id='boxTemp'>
+        <div>
+            <div class="form-group">
+                <label for="input-id" class="col-sm-2">poster</label>
+                <input type="text" class="form-control" v-model='user'>
+            </div>
+            <div class="form-group">
+                <label for="input-id" class="col-sm-2">发布内容</label>
+                <input type="text" class="form-control" v-model='content'>
+            </div>
+
+            <div class="form-group">
+                <input type="button" value='评论' class="btn btn-primary" @click='pub'>
+            </div>
+
+        </div>
+    </template>
+
+    <script>
+
+        var commentBox = {
+            template: '#boxTemp',
+            data() {
+                return {
+                    user: '',
+                    content: '',
+                    id: Date.now()
+                }
+            },
+            methods: {
+                pub() {
+                    // this.$emit('func',{'user':this.user,'content':this.content,'id':this.id})
+                    // 使用localstorage存放数据
+                    var user = { 'user': this.user, 'content': this.content, 'id': this.id }
+                    var posts = JSON.parse(localStorage.getItem('p') || '[]')
+
+                    posts.unshift(user)
+                    localStorage.setItem('p', JSON.stringify(posts))
+                    this.$emit('func')
+                }
+            }
+        }
+
+        var vm = new Vue({
+            el: '#app',
+            data: {
+                posts: [
+                    { id: Date.now(), user: '小明', content: '月黑风高夜' },
+                    { id: Date.now() + 1, user: '小红', content: '花落知道少' },
+                    { id: Date.now() + 2, user: '小强', content: '床前明月光' },
+                    { id: Date.now() + 3, user: '小王', content: '红杏出墙来' },
+
+                ]
+            },
+            components: {
+                'comment-box': commentBox
+            },
+           
+
+            methods: {
+                loadPosts() {
+                    var posts = JSON.parse(localStorage.getItem('p') || '[]')
+                    this.posts = posts
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>

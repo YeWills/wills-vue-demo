@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router@2.0.0/dist/vue-router.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap.min.css">
+</head>
+
+<body>
+
+    <div id='app'>
+        <router-link to='/login?id=1&name=呵呵'>登陆</router-link>
+        <router-link to='/regist'>注册</router-link>
+
+        <router-view></router-view>
+    </div>
+
+    <script>
+        // 这两组件申明要在router创建之前。不然会找不到
+        var login = {
+            // fixme 插值表达式中，可以直接使用当前实例的属性！！！
+            template: "<div>登陆组件---{{$route.query.id}}---{{$route.query.name}}</div>",
+
+            // template: "<div>登陆组件---{{id}}---{{name}}</div>",
+            // data(){
+            //     return {id:'',name:''}
+            // },
+            // created(){
+            //     this.id = this.$route.query.id
+            //     this.name = this.$route.query.name
+            // }
+        }
+        var regist = {
+            template: "<div>注册组件</div>"
+        }
+
+        var router = new VueRouter({
+            routes: [
+                { path: '/', redirect: '/login' },
+                { path: "/login", component: login },
+                { path: "/regist", component: regist },
+            ]
+        })
+
+
+
+
+        var vm = new Vue({
+            el: "#app",
+            data: {},
+            router: router
+        })
+    </script>
+</body>
+
+</html>
