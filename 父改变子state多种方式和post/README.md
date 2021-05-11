@@ -15,3 +15,9 @@
 
 react的hooks出现后，useeffect的依赖参数其实就是简化了这个比较的工作，不用以前一样自己写，所以react hooks也解放了react，如果没有hooks，react肯定要被vue比下去；
 
+本例子其他亮点：
+ v-model的变量属性写法
+```html
+<select style="width:130px;margin:-3px 0 0 0;" v-model="listvalues[item.name]">\
+```
+
